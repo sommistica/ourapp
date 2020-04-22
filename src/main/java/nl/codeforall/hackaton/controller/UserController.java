@@ -62,15 +62,16 @@ public class UserController {
         return new ResponseEntity<>(dtoConverter.ConvertToDto(user), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/{email}/user/{password}")
-    public String authenticata(@PathVariable String email, @PathVariable String password) {
+    @RequestMapping(method = RequestMethod.GET, path = "/{email}/{password}")
+    public ResponseEntity<UserDto> authenticate(@PathVariable String email, @PathVariable String password) {
 
-        if (userService.authenticata(email, password)) {
-            return "redirect:/user/" + email;
+        if (userService.authenticate(email, password)) {
+
+            User user = userService.get(email);
+            return new ResponseEntity<>(dtoConverter.ConvertToDto(user), HttpStatus.OK);
         }
 
-        return "redirect:/login/";
-
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
 }
