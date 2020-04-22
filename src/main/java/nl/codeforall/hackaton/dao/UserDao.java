@@ -13,7 +13,7 @@ public class UserDao {
     @PersistenceContext
     private EntityManager em;
 
-    @Autowired
+
     public void setEm(EntityManager em) {
         this.em = em;
     }

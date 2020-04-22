@@ -2,6 +2,7 @@ package nl.codeforall.hackaton.controller;
 
 import nl.codeforall.hackaton.dto.DtoConverter;
 import nl.codeforall.hackaton.dto.UserDto;
+import nl.codeforall.hackaton.model.User;
 import nl.codeforall.hackaton.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,10 +28,13 @@ public class UserController {
         this.dtoConverter = dtoConverter;
     }
 
-//    @RequestMapping(method = RequestMethod.GET, path = "/{id}")
-//    public ResponseEntity<UserDto> showUser(@PathVariable Integer id){
-//
-//    }
-//
+    @RequestMapping(method = RequestMethod.POST, path = "/2")
+    public void showUser(){
+        User user = new User();
+        user.setUsername("gijs");
+        user.setPassword("sfafdafasdfsdf");
+        user.setEmail("gewoongijs@gmail.com");
+        userService.save(user);
+    }
 
 }
