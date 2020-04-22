@@ -1,30 +1,13 @@
 package nl.codeforall.hackaton.service;
 
-import nl.codeforall.hackaton.dao.UserDao;
 import nl.codeforall.hackaton.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class UserService {
+public class UserService extends GenericService<User>{
 
-
-    private UserDao userDao;
-
-    @Autowired
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
-
-    public User get(Integer id){
-
-        return userDao.findById(id);
-    }
-
-    @Transactional
-    public User save(User user){
-
-        return userDao.saveOrUpdate(user);
+    public boolean authenticata(String email, String password){
+        User user = dao.findByEmail(email);
+        return user != null && user.getPassword().equals(password);
     }
 }

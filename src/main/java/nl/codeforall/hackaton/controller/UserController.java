@@ -62,4 +62,15 @@ public class UserController {
         return new ResponseEntity<>(dtoConverter.ConvertToDto(user), HttpStatus.OK);
     }
 
+    @RequestMapping(method = RequestMethod.GET, path = "/{email}/user/{password}")
+    public String authenticata(@PathVariable String email, @PathVariable String password) {
+
+        if (userService.authenticata(email, password)) {
+            return "redirect:/user/" + email;
+        }
+
+        return "redirect:/login/";
+
+    }
+
 }
