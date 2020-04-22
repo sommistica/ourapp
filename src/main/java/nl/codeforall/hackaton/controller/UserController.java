@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.naming.Binding;
 import javax.validation.Valid;
 
 @RestController
@@ -62,12 +61,13 @@ public class UserController {
         return new ResponseEntity<>(dtoConverter.ConvertToDto(user), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/{email}/{password}")
-    public ResponseEntity<UserDto> authenticate(@PathVariable String email, @PathVariable String password) {
+    @RequestMapping(method = RequestMethod.POST, path = "/login")
+    public ResponseEntity<UserDto> authenticate(@RequestBody UserDto userDto) {
 
-        if (userService.authenticate(email, password)) {
+        User user = userService.get(userDto.getEmail());
 
-            User user = userService.get(email);
+        if(user != null && user.getPassword().equals(userDto.getPassword())){
+
             return new ResponseEntity<>(dtoConverter.ConvertToDto(user), HttpStatus.OK);
         }
 
