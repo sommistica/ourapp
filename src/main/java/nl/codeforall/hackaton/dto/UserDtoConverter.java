@@ -25,7 +25,7 @@ public class UserDtoConverter {
         user.setUsername(userDto.getUsername());
         user.setPassword(userDto.getPassword());
         user.setEmail(userDto.getEmail());
-
+        user.setScore(userDto.getScore());
         return user;
     }
 
@@ -36,6 +36,7 @@ public class UserDtoConverter {
         userDto.setUsername(user.getUsername());
         userDto.setPassword(user.getPassword());
         userDto.setEmail(user.getEmail());
+        userDto.setScore(user.getScore());
 
         return userDto;
     }

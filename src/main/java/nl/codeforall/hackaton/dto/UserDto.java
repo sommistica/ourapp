@@ -25,6 +25,8 @@ public class UserDto {
     @NotBlank(message = "Email is mandatory")
     private String email;
 
+    private Integer score = 0;
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -39,6 +41,10 @@ public class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
     }
 
     public Integer getId() {
@@ -57,5 +63,7 @@ public class UserDto {
         return email;
     }
 
-
+    public Integer getScore() {
+        return score;
+    }
 }
