@@ -1,5 +1,7 @@
 package nl.codeforall.hackaton.dto;
 
+import nl.codeforall.hackaton.model.User;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -20,7 +22,7 @@ public class ChallengeDto {
     private String description;
 
 
-    private Date date;
+    private String date;
     private Integer viewers = 0;
 
     public void setId(Integer id) {
@@ -35,9 +37,10 @@ public class ChallengeDto {
         this.description = description;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
+
 
     public String getTitle() {
         return title;
@@ -47,7 +50,7 @@ public class ChallengeDto {
         return description;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 

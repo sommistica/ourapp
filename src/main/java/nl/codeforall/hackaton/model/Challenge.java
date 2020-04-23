@@ -1,6 +1,7 @@
 package nl.codeforall.hackaton.model;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Date;
 
@@ -10,8 +11,11 @@ public class Challenge extends AbstractModel {
 
     private String title;
     private String description;
-    private Date date;
+    private String date;
     private Integer viewers = 0;
+
+    @ManyToOne
+    private User user;
 
     public void setTitle(String title) {
         this.title = title;
@@ -21,7 +25,7 @@ public class Challenge extends AbstractModel {
         this.description = description;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -33,6 +37,10 @@ public class Challenge extends AbstractModel {
         viewers--;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -41,11 +49,16 @@ public class Challenge extends AbstractModel {
         return description;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
     public Integer getViewers() {
         return viewers;
     }
+
+    public User getUser() {
+        return user;
+    }
 }
+

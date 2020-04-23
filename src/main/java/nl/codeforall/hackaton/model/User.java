@@ -1,6 +1,8 @@
 package nl.codeforall.hackaton.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -12,7 +14,14 @@ public class User extends AbstractModel {
     private String email;
     private Integer score = 0;
 
+    @OneToMany(
+             cascade = {CascadeType.ALL},
 
+            mappedBy = "customer",
+
+            fetch = FetchType.EAGER
+    )
+    private List<Challenge> challenges = new ArrayList<>();
 
     public void setUsername(String username) {
         this.username = username;
