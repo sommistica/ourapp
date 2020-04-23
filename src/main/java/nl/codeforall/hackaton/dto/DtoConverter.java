@@ -5,6 +5,9 @@ import nl.codeforall.hackaton.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class DtoConverter {
 
@@ -15,7 +18,7 @@ public class DtoConverter {
         this.userService = userService;
     }
 
-    public User ConvertToUser(UserDto userDto){
+    public User convertToUser(UserDto userDto){
 
         User user = (userDto.getId() != null ? userService.get(userDto.getId()) : new User());
 
@@ -26,7 +29,7 @@ public class DtoConverter {
         return user;
     }
 
-    public UserDto ConvertToDto(User user){
+    public UserDto convertToDto(User user){
 
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
@@ -35,5 +38,17 @@ public class DtoConverter {
         userDto.setEmail(user.getEmail());
 
         return userDto;
+    }
+
+    public List<UserDto> convertToDtoList(List<User> users){
+
+        List<UserDto> userDtos = new ArrayList<>();
+
+        for(User user : users){
+            UserDto userDto = convertToDto(user);
+            userDtos.add(userDto);
+        }
+
+        return userDtos;
     }
 }

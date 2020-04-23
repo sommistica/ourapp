@@ -12,13 +12,13 @@ public class UserService extends GenericService<User>{
         return user != null && user.getPassword().equals(password);
     }
 
-    @Transactional
+
     public User get(String email){
 
         return dao.findByEmail(email);
     }
 
-    @Transactional
+
     public User getbyEmail(String email){
 
         return dao.findByEmail(email);

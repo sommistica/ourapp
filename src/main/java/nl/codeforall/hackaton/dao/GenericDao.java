@@ -7,6 +7,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GenericDao<T> {
 
@@ -23,20 +25,28 @@ public class GenericDao<T> {
         this.em = em;
     }
 
+
+    public List<T> findAll() {
+
+        CriteriaQuery<T> criteriaQuery = em.getCriteriaBuilder().createQuery(modelType);
+        Root<T> root = criteriaQuery.from(modelType);
+        return em.createQuery(criteriaQuery).getResultList();
+    }
+
     public T findById(Integer id){
         return em.find(modelType, id);
     }
-    public User findByEmail(String email){
-        try {
+
+    public T findByEmail(String email){
 
             // 1 - get a CriteriaBuilder object from the EntityManager
             CriteriaBuilder builder = em.getCriteriaBuilder();
 
             // 2 - create a new CriteriaQuery instance for the Customer entity
-            CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
+            CriteriaQuery<T> criteriaQuery = builder.createQuery(modelType);
 
             // 3 - get the root of the query, from where all navigation starts
-            Root<User> root = criteriaQuery.from(User.class);
+            Root<T> root = criteriaQuery.from(modelType);
 
             // 4 - specify the item that is to be returned in the query result
             criteriaQuery.select(root);
@@ -46,12 +56,6 @@ public class GenericDao<T> {
 
             // 6 - create and execute a query using the criteria
             return em.createQuery(criteriaQuery).getSingleResult();
-
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
     }
 
     public T saveOrUpdate(T model){

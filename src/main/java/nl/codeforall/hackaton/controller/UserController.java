@@ -14,6 +14,8 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.util.List;
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/user")
@@ -39,7 +41,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        User savedUser = userService.save(dtoConverter.ConvertToUser(userDto));
+        User savedUser = userService.save(dtoConverter.convertToUser(userDto));
 
         UriComponents uriComponents = uriComponentsBuilder.path("/api/user/" + savedUser.getId()).build();
 
@@ -58,7 +60,15 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(dtoConverter.ConvertToDto(user), HttpStatus.OK);
+        return new ResponseEntity<>(dtoConverter.convertToDto(user), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/list")
+    public ResponseEntity<List<UserDto>> showList(){
+
+        List<UserDto> users = dtoConverter.convertToDtoList(userService.getList());
+
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/login")
@@ -67,10 +77,12 @@ public class UserController {
         User user = userService.getbyEmail(userDto.getEmail());
         if(user != null && user.getPassword().equals(userDto.getPassword())){
 
-            return new ResponseEntity<>(dtoConverter.ConvertToDto(user), HttpStatus.OK);
+            return new ResponseEntity<>(dtoConverter.convertToDto(user), HttpStatus.OK);
         }
 
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
+
 
 }

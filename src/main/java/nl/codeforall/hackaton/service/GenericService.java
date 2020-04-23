@@ -4,6 +4,8 @@ import nl.codeforall.hackaton.dao.GenericDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public class GenericService<T> {
 
     protected GenericDao<T> dao;
@@ -11,6 +13,11 @@ public class GenericService<T> {
     @Autowired
     public void setDao(GenericDao<T> dao) {
         this.dao = dao;
+    }
+
+    public List<T> getList(){
+
+        return dao.findAll();
     }
 
     public T get(Integer id){
