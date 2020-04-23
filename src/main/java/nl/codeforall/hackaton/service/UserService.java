@@ -12,14 +12,7 @@ public class UserService extends GenericService<User>{
         return user != null && user.getPassword().equals(password);
     }
 
-
-    public User get(String email){
-
-        return dao.findByEmail(email);
-    }
-
-
-    public User getbyEmail(String email){
+    public User getByEmail(String email){
 
         return dao.findByEmail(email);
     }

@@ -1,6 +1,6 @@
 package nl.codeforall.hackaton.controller;
 
-import nl.codeforall.hackaton.dto.DtoConverter;
+import nl.codeforall.hackaton.dto.UserDtoConverter;
 import nl.codeforall.hackaton.dto.UserDto;
 import nl.codeforall.hackaton.model.User;
 import nl.codeforall.hackaton.service.UserService;
@@ -22,7 +22,7 @@ import java.util.List;
 public class UserController {
 
     private UserService userService;
-    private DtoConverter dtoConverter;
+    private UserDtoConverter dtoConverter;
 
     @Autowired
     public void setUserService(UserService userService) {
@@ -30,8 +30,8 @@ public class UserController {
     }
 
     @Autowired
-    public void setDtoConverter(DtoConverter dtoConverter) {
-        this.dtoConverter = dtoConverter;
+    public void setDtoConverter(UserDtoConverter userDtoConverter) {
+        this.dtoConverter = userDtoConverter;
     }
 
     @RequestMapping(method = RequestMethod.POST, path = {"/", ""})
@@ -67,14 +67,13 @@ public class UserController {
     public ResponseEntity<List<UserDto>> showList(){
 
         List<UserDto> users = dtoConverter.convertToDtoList(userService.getList());
-
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/login")
     public ResponseEntity<UserDto> authenticate(@RequestBody UserDto userDto) {
 
-        User user = userService.getbyEmail(userDto.getEmail());
+        User user = userService.getByEmail(userDto.getEmail());
         if(user != null && user.getPassword().equals(userDto.getPassword())){
 
             return new ResponseEntity<>(dtoConverter.convertToDto(user), HttpStatus.OK);
@@ -82,7 +81,6 @@ public class UserController {
 
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-
 
 
 }
