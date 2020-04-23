@@ -14,7 +14,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
-
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -64,8 +64,7 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST, path = "/login")
     public ResponseEntity<UserDto> authenticate(@RequestBody UserDto userDto) {
 
-        User user = userService.get(userDto.getEmail());
-
+        User user = userService.getbyEmail(userDto.getEmail());
         if(user != null && user.getPassword().equals(userDto.getPassword())){
 
             return new ResponseEntity<>(dtoConverter.ConvertToDto(user), HttpStatus.OK);

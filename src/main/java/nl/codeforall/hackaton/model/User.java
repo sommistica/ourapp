@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Table(name = "user")
 public class User extends AbstractModel {
 
+
     private String username;
     private String password;
     private String email;
