@@ -17,7 +17,7 @@ public class User extends AbstractModel {
     @OneToMany(
              cascade = {CascadeType.ALL},
 
-            mappedBy = "customer",
+            mappedBy = "user",
 
             fetch = FetchType.EAGER
     )
